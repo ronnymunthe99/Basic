@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Form Tambah Data Produk</title>
+<script>
+
+
+function validateForm(){
+	if(document.getElementById["nama produk"].value == ""){
+	alert("Tolong isi nama produk.");
+	document.forms["formRegistration"]["nama produk"].focus();
+	return false;
+	}
+	
+	if(document.forms["formRegistration"]["deskripsi"].value==""){
+	alert("Tolong isi deskripsi.");
+	document.forms["formRegistration"]["deskripsi"].focus();
+	return false;
+	}
+	
+	if(document.forms["formRegistration"]["sub kategori"].value==""){
+	alert("Tolong isi sub kategori.");
+	document.forms["formRegistration"]["sub kategori"].focus();
+	return false;
+	}
+	
+	if(document.forms["formRegistration"]["harga satuan"].value==""){
+	alert("Tolong isi harga satuan.");
+	document.forms["formRegistration"]["harga satuan"].focus();
+	return false;
+	}else if (isNaN(document.forms["formRegistration"]["harga satuan"].value)){
+	alert("Harga satuan harus berisi numerik.");
+	document.forms["formRegistration"]["harga satuan"].value = "";
+	document.forms["formRegistration"]["harga satuan"].focus();
+	return false;
+	}
+	
+	if(document.forms["formRegistration"]["grosir"].value==""){
+	alert("Tolong pilih grosir.");
+	}
+	
+	if(document.forms["formRegistration"]["harga grosir"].value==""){
+	alert("Tolong isi harga grosir.");
+	document.forms["formRegistration"]["harga grosir"].focus();
+	return false;
+	}else if (isNaN(document.forms["formRegistration"]["harga grosir"].value)){
+	alert("Harga grosis harus berisi numerik.");
+	document.forms["formRegistration"]["harga grosir"].value = "";
+	document.forms["formRegistration"]["harga grosir"].focus();
+	return false;
+	}
+	
+	var JasaKirim = document.forms["formRegistration"]["jasaKirim[]"];
+	if (jasaKirim[0].checked == false && jasaKirim[1].checked == false && jasaKirim[2].checked == false && jasaKirim[3].checked == false && jasaKirim[4].checked == false ){
+	alert("Tolong pilih jasa kirim.");
+	return false;
+	}
+	
+	if(document.forms["formRegistration"]["captcha_input"].value != document.forms["formRegistration"]["captcha_text"].value){
+		alert("Tolong isi captcha dengan benar");
+	}
+	return true;
+}
+
+function get_subKategori(){
+	var kategori = document.forms["formRegistration"]["kategori"].value;
+	if(kategori == "Baju"){
+		document.getElementById("sub kategori").innerHTML='<option value="Baju Pria">Baju Pria</option>'+'<option value="Baju Wanita">Baju Wanita</option>'+'<option value="Baju Anak">Baju Anak</option>';
+	}
+	if(kategori == "Elektronik"){
+		document.getElementById("sub kategori").innerHTML='<option value="Mesin Cuci">Mesin Cuci</option>'+'<option value="Kulkas">Kulkas</option>'+'<option value="AC">AC</option>';
+	}
+	if(kategori == "Alat Tulis"){
+		document.getElementById("sub kategori").innerHTML='<option value="Kertas">Kertas</option>'+'<option value="Map">Map</option>'+'<option value="Pulpen">Pulpen</option>';
+	}
+
+}
+
+function generateCaptcha(){
+	var a = String.fromCharCode(Math.ceil((Math.random()*26)+65));
+	var b = String.fromCharCode(Math.ceil((Math.random()*26)+65));
+	var c = String.fromCharCode(Math.ceil((Math.random()*26)+65));
+	var d = String.fromCharCode(Math.ceil((Math.random()*26)+65));
+	var e = String.fromCharCode(Math.ceil((Math.random()*26)+65));
+	var code = a + b + c + d + e;
+	document.forms["formRegistration"]["captcha_text"].value = code;
+}
+
+function removeSpaces(String){
+	return string.split(' ').join('');
+}
+</script>
+</head>
+
+<body onload = "generateCaptcha()">
+<h2>Form Tambah Data Produk</h2>
+<form id="formRegistration" method = "GET" autocomplete="on" action="" onsubmit="return validateForm()">
+<table>
+	<tr>
+		<td>Nama Produk</td>
+		<td>:<td>
+		<td><input type="text" min="5" max="30" id="nama produk" size="30"/></td>
+	</tr>
+	<tr>
+		<td>Deskripsi</td>
+		<td>:<td>
+		<td><textarea name="deskripsi" rows="5" cols="30" min="5" max="100" ></textarea></td>
+	</tr>
+	<tr>
+		<td>Kategori</td>
+		<td>:<td>
+		<td><select name="kategori" onchange="get_subKategori()">
+			<option value = "">--Pilih Kategori--</option>
+			<option value="Baju">Baju</option>
+			<option value="Elektronik">Elektronik</option>
+			<option value="Alat Tulis">Alat Tulis</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Sub Kategori</td>
+		<td>:<td>
+		<td><select name="sub kategori" id="sub kategori">
+			<option value ="">--Pilih sub kategori--</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Harga Satuan</td>
+		<td>:<td>
+		<td><input type="text" name="harga satuan"></td>
+	</tr>
+	<tr>
+		<td>Grosir</td>
+		<td>:<td>
+		<td>
+			<input type="radio" name="grosir" value = "Ya">Ya<br />
+			<input type="radio" name="grosir" value = "Tidak">Tidak
+		</td>
+	<tr>
+		<td>Harga Grosir</td>
+		<td>:<td>
+		<td><input type="text" name="harga grosir"></td>
+	</tr>
+	<tr>
+		<td>Jasa Kirim</td>
+		<td>:<td>
+		<td>
+			<input type="checkbox" name="jasaKirim[]" value="JNE">JNE<br />
+			<input type="checkbox" name="jasaKirim[]" value="TIKI">TIKI<br />
+			<input type="checkbox" name="jasaKirim[]" value="SiCepat">SiCepat<br />
+			<input type="checkbox" name="jasaKirim[]" value="Ninja Express">Ninja Express<br />
+			<input type="checkbox" name="jasaKirim[]" value="Wahana">Wahana<br />
+		</td>
+	</tr>
+	<tr>
+		<td>Captcha</td>
+		<td>:<td>
+		<td>
+			<input type="text" name="captcha_text" size="10" disabled>
+			<input type="text" name="captcha_input" size="10">
+		</td>
+	</tr>
+	<script>
+	
+	</script>
+	<tr>
+		<td colspan="3"><br><input type="submit" name="submit" value="Submit">&nbsp;
+		<input type="reset" name="reset" value="Reset"></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>
